@@ -1,0 +1,8 @@
+{
+  "transactionReference": 1234,
+  "accountNumber": "NL13ABNA4948749915",
+  "startBalance": 10,
+  "endBalance": 4.8,
+  "mutation": -5.2,
+  "description": "test transaction"
+}
