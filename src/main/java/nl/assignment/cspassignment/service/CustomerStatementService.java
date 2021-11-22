@@ -22,6 +22,12 @@ public class CustomerStatementService {
         validateBalance(cs, result);
         return result;
     }
+    
+    private void register(CustomerStatement cs, CustomerStatementResult result) {
+        if (!statements.register(cs.getTransactionReference())) {
+            result.addError("DUPLICATE_REFERENCE", cs.getTransactionReference(), cs.getAccountNumber());
+        }
+    }
 
     private void validateBalance(CustomerStatement cs, CustomerStatementResult result) {
         BigDecimal expected = Optional.ofNullable(cs.getStartBalance())
@@ -33,12 +39,6 @@ public class CustomerStatementService {
         BigDecimal actual = cs.getEndBalance();
         if (expected == null || actual == null || actual.compareTo(expected) != 0) {
             result.addError("INCORRECT_END_BALANCE", cs.getTransactionReference(), cs.getAccountNumber());
-        }
-    }
-
-    private void register(CustomerStatement cs, CustomerStatementResult result) {
-        if (!statements.register(cs.getTransactionReference())) {
-            result.addError("DUPLICATE_REFERENCE", cs.getTransactionReference(), cs.getAccountNumber());
         }
     }
 
